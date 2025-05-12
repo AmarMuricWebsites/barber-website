@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   ChevronRight,
   Clock,
+  PersonStanding,
   Scissors,
   User,
 } from "lucide-react";
@@ -20,7 +21,7 @@ import Link from "next/link";
 
 export default function AppointmentPage() {
   const [step, setStep] = useState(1);
-  const [date, setDate] = useState(null);
+  const [date, setDate] = useState<Date>();
   const [bookingComplete, setBookingComplete] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -32,31 +33,25 @@ export default function AppointmentPage() {
     notes: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSelectChange = (name, value) => {
+  const handleSelectChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const nextStep = () => {
     if (step === 1 && !formData.service) {
-      toast({
-        title: "Service Required",
-        description: "Please select a service to continue.",
-        variant: "destructive",
-      });
+      toast.warning("Please select a service to continue.");
       return;
     }
 
     if (step === 2 && (!date || !formData.time)) {
-      toast({
-        title: "Date and Time Required",
-        description: "Please select both a date and time to continue.",
-        variant: "destructive",
-      });
+      toast.warning("Please select both a date and time to continue.");
       return;
     }
 
@@ -69,22 +64,14 @@ export default function AppointmentPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = () => {
     if (!formData.name || !formData.email || !formData.phone) {
-      toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
-        variant: "destructive",
-      });
+      toast.warning("Please fill in all required fields.");
       return;
     }
 
-    // Here you would typically send the appointment data to your backend
     console.log("Appointment submitted:", { ...formData, date });
 
-    // Show success state instead of toast
     setBookingComplete(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -99,7 +86,7 @@ export default function AppointmentPage() {
       time: "",
       notes: "",
     });
-    setDate(null);
+    setDate(undefined);
     setStep(1);
     setBookingComplete(false);
   };
@@ -148,8 +135,8 @@ export default function AppointmentPage() {
               Thank You for Your Booking!
             </h1>
             <p className="text-xl text-zinc-600 mb-8">
-              We're excited to see you on {date?.toLocaleDateString()} at{" "}
-              {formData.time}.
+              {"We're"} excited to see you on{" "}
+              {(date as Date)?.toLocaleDateString()} at {formData.time}.
             </p>
             <div className="bg-white p-6 rounded-xl shadow-sm mb-8">
               <h2 className="text-2xl font-semibold mb-4">Booking Details</h2>
@@ -172,7 +159,7 @@ export default function AppointmentPage() {
                 <div>
                   <p className="text-zinc-500 text-sm">Date & Time</p>
                   <p className="font-medium">
-                    {date?.toLocaleDateString()} at {formData.time}
+                    {(date as Date)?.toLocaleDateString()} at {formData.time}
                   </p>
                 </div>
                 <div>
@@ -191,7 +178,7 @@ export default function AppointmentPage() {
               </div>
             </div>
             <div className="bg-zinc-100 p-6 rounded-xl mb-8">
-              <h3 className="font-semibold mb-3">What's Next?</h3>
+              <h3 className="font-semibold mb-3">{"What's"} Next?</h3>
               <ul className="text-left space-y-2 text-zinc-600">
                 <li className="flex items-start">
                   <Check className="h-5 w-5 text-primary mr-2 shrink-0 mt-0.5" />
@@ -202,7 +189,8 @@ export default function AppointmentPage() {
                 <li className="flex items-start">
                   <Check className="h-5 w-5 text-primary mr-2 shrink-0 mt-0.5" />
                   <span>
-                    You'll receive a reminder 24 hours before your appointment
+                    {"You'll"} receive a reminder 24 hours before your
+                    appointment
                   </span>
                 </li>
                 <li className="flex items-start">
@@ -319,7 +307,6 @@ export default function AppointmentPage() {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        {/* Step 1: Service Selection */}
         {step === 1 && (
           <div className="space-y-8">
             <h2 className="text-3xl font-bold text-center mb-8">
@@ -409,7 +396,6 @@ export default function AppointmentPage() {
           </div>
         )}
 
-        {/* Step 2: Date & Time Selection */}
         {step === 2 && (
           <div className="space-y-8">
             <h2 className="text-3xl font-bold text-center mb-8">
@@ -425,7 +411,6 @@ export default function AppointmentPage() {
                     onSelect={setDate}
                     className="rounded-md border p-3"
                     disabled={(date) => {
-                      // Disable past dates and Sundays (assuming Sunday is day 0)
                       return date < new Date() || date.getDay() === 0;
                     }}
                   />
@@ -487,7 +472,7 @@ export default function AppointmentPage() {
                     <h3 className="text-xl font-semibold">No Preference</h3>
                   </div>
                   <p className="text-zinc-600 mb-4">
-                    We'll assign you to the first available barber
+                    {"We'll"} assign you to the first available barber
                   </p>
                   <div className="mt-auto flex items-center">
                     <div
@@ -518,12 +503,8 @@ export default function AppointmentPage() {
                 >
                   <CardContent className="p-6 flex flex-col h-full">
                     <div className="flex items-center mb-4">
-                      <div className="w-16 h-16 bg-zinc-200 rounded-full mr-4">
-                        <img
-                          src="/placeholder.svg?height=100&width=100"
-                          alt={barber.name}
-                          className="w-full h-full rounded-full object-cover"
-                        />
+                      <div className="w-16 h-16 relative bg-zinc-200 rounded-full mr-4">
+                        <PersonStanding className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2" />
                       </div>
                       <div>
                         <h3 className="text-xl font-semibold">{barber.name}</h3>
@@ -681,7 +662,9 @@ export default function AppointmentPage() {
                       <div className="flex justify-between mb-2">
                         <span className="font-medium">Date:</span>
                         <span>
-                          {date ? date.toLocaleDateString() : "Not selected"}
+                          {date
+                            ? (date as Date).toLocaleDateString()
+                            : "Not selected"}
                         </span>
                       </div>
                       <div className="flex justify-between mb-2">

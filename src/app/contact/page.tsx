@@ -17,20 +17,17 @@ export default function ContactPage() {
     message: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log("Form submitted:", formData);
-    toast({
-      title: "Message Sent",
-      description: "We'll get back to you as soon as possible.",
-    });
-    // Reset form
+    toast.message("We'll get back to you as soon as possible.");
+
     setFormData({
       name: "",
       email: "",
@@ -100,7 +97,6 @@ export default function ContactPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        {/* Contact Form */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -154,23 +150,19 @@ export default function ContactPage() {
           </form>
         </div>
 
-        {/* Map */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Find Us</h2>
           <div className="aspect-video bg-zinc-200 rounded-lg overflow-hidden">
-            {/* Replace with actual map embed */}
             <div className="w-full h-full flex items-center justify-center bg-zinc-300">
-              <p className="text-zinc-600">Map Embed Goes Here</p>
-              {/* For a real implementation, you would use something like: */}
-              {/* <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890!2d-73.9876!3d40.7654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM0LCsDQ1JzU1LjQiTiA3M8KwNTknMTUuNCJX!5e0!3m2!1sen!2sus!4v1234567890!5m2!1sen!2sus" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen="" 
-                loading="lazy" 
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.67890!2d-73.9876!3d40.7654!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM0LCsDQ1JzU1LjQiTiA3M8KwNTknMTUuNCJX!5e0!3m2!1sen!2sus!4v1234567890!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={false}
+                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-              ></iframe> */}
+              ></iframe>
             </div>
           </div>
           <div className="mt-6 bg-zinc-100 p-4 rounded-lg">
@@ -183,7 +175,7 @@ export default function ContactPage() {
           <div className="mt-4 bg-zinc-100 p-4 rounded-lg">
             <h3 className="font-semibold mb-2">Public Transportation</h3>
             <p className="text-zinc-600">
-              We're conveniently located two blocks from the Downtown Metro
+              {"We're"} conveniently located two blocks from the Downtown Metro
               Station. Bus routes 10, 15, and 22 stop directly in front of our
               shop.
             </p>
