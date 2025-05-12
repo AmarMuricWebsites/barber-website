@@ -1,103 +1,145 @@
-import Image from "next/image";
+import Link from "next/link"
+import { Clock, MapPin, Phone, Scissors } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <div className="flex flex-col min-h-screen">
+      {/* Hero Section */}
+      <section className="relative w-full h-[80vh] bg-black">
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/50 z-10" />
+        <div
+          className="absolute inset-0 bg-cover bg-center z-0"
+          style={{ backgroundImage: "url('/placeholder.svg?height=800&width=1200')" }}
         />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+        <div className="relative z-20 container mx-auto px-4 h-full flex flex-col justify-center">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">PRIME CUTS</h1>
+          <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-xl">
+            Premium barbershop experience with skilled professionals and exceptional service
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Button asChild size="lg">
+              <Link href="/appointment">Book Appointment</Link>
+            </Button>
+            <Button asChild variant="outline" size="lg" className="text-white border-white hover:bg-white/10">
+              <Link href="/services">Our Services</Link>
+            </Button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Services Preview */}
+      <section className="py-16 bg-zinc-100">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Our Services</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              { name: "Classic Haircut", price: "$25", icon: Scissors },
+              { name: "Beard Trim", price: "$15", icon: Scissors },
+              { name: "Hot Towel Shave", price: "$30", icon: Scissors },
+            ].map((service, index) => (
+              <Card key={index} className="overflow-hidden hover:shadow-lg transition-shadow">
+                <CardContent className="p-6 flex flex-col items-center text-center">
+                  <div className="w-20 h-20 bg-primary rounded-full flex items-center justify-center mb-6">
+                    <service.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">{service.name}</h3>
+                  <p className="text-zinc-500 mb-4">Starting at {service.price}</p>
+                  <Button variant="outline" asChild className="mt-auto">
+                    <Link href="/services">Learn More</Link>
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Button asChild variant="default" className="bg-zinc-900 hover:bg-zinc-800">
+              <Link href="/services">View All Services</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* About Preview */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row items-center gap-8">
+            <div className="w-full md:w-1/2 mb-8 md:mb-0">
+              <div className="rounded-lg overflow-hidden h-[400px] bg-zinc-200">
+                <img
+                  src="/placeholder.svg?height=600&width=800"
+                  alt="Barbershop interior"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2">
+              <h2 className="text-3xl font-bold mb-4">About Prime Cuts</h2>
+              <p className="text-zinc-600 mb-6">
+                Founded in 2010, Prime Cuts has been providing premium grooming services to gentlemen who appreciate
+                quality and style. Our team of skilled barbers combines traditional techniques with modern trends to
+                deliver exceptional results.
+              </p>
+              <Button
+                asChild
+                variant="outline"
+                className="border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-white"
+              >
+                <Link href="/about">Learn Our Story</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Preview */}
+      <section className="py-16 bg-zinc-900 text-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">Visit Us</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-4">
+                <MapPin className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Location</h3>
+              <p className="text-zinc-300">123 Main Street, Downtown, City</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-4">
+                <Clock className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Hours</h3>
+              <p className="text-zinc-300">Mon-Fri: 9am - 7pm</p>
+              <p className="text-zinc-300">Sat: 10am - 6pm</p>
+              <p className="text-zinc-300">Sun: Closed</p>
+            </div>
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-4">
+                <Phone className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2">Contact</h3>
+              <p className="text-zinc-300">(555) 123-4567</p>
+              <p className="text-zinc-300">info@primecuts.com</p>
+            </div>
+          </div>
+          <div className="text-center mt-10">
+            <Button asChild variant="default">
+              <Link href="/contact">Contact Us</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-16 bg-primary">
+        <div className="container mx-auto px-4 text-center">
+          <h2 className="text-3xl font-bold text-white mb-6">Ready for a Fresh Look?</h2>
+          <Button asChild size="lg" className="bg-white text-primary hover:bg-zinc-100">
+            <Link href="/appointment">Book Your Appointment Now</Link>
+          </Button>
+        </div>
+      </section>
     </div>
-  );
+  )
 }
